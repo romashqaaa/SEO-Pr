@@ -1,5 +1,50 @@
 {% extends "base.html" %}
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "LocalBusiness",
+  "name": "{{ site.name }}",
+  "image": "https://{{ site.domain }}/static/images/og-default.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{{ site.street }}",
+    "addressLocality": "{{ site.city }}",
+    "postalCode": "{{ site.postal_code }}",
+    "addressCountry": "{{ site.country }}"
+  },
+  "telephone": "{{ site.phone_raw }}",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{{ rating }}",
+    "reviewCount": "{{ reviews_count }}"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Menu",
+  "name": "Банкетное меню / Пакеты услуг",
+  "description": "Пакеты и меню для мероприятий в пространстве {{ site.name }}",
+  "hasMenuSection": [
+    {% for package in packages %}
+    {
+      "@type": "MenuSection",
+      "name": "{{ package.name }}",
+      "description": "{{ package.description }}",
+      "offers": {
+        "@type": "Offer",
+        "price": "{{ package.price }}",
+        "priceCurrency": "RUB"
+      }
+    }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+
 {# SEO-ЗАДАНИЕ: title/description. Какие запросы? «банкетное меню цена на человека», «меню на свадьбу» ... #}
 {# Задание со звёздочкой: разметьте меню через Schema.org Menu / Offer. #}
 {% block title %} Меню | Подземка {% endblock %}
@@ -10,6 +55,30 @@
     <a href="{% url 'venue:menu' %}">Меню</a> <span>/</span>
     <span>{{ poster.title }}</span>
   </nav>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Главная",
+      "item": "https://{{ site.domain }}/"
+    }
+    {% if breadcrumbs %}
+      {% for crumb in breadcrumbs %}
+      ,{
+        "@type": "ListItem",
+        "position": {{ forloop.counter|add:1 }},
+        "name": "{{ crumb.name }}",
+        "item": "https://{{ site.domain }}{{ crumb.url }}"
+      }
+      {% endfor %}
+    {% endif %}
+  ]
+}
+</script>
 {% endblock %}
 
 {% block content %}

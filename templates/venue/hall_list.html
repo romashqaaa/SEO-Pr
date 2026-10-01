@@ -11,6 +11,30 @@
     <a href="{% url 'venue:hall_list' %}">Залы</a> <span>/</span>
     <span>{{ poster.title }}</span>
   </nav>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Главная",
+      "item": "https://{{ site.domain }}/"
+    }
+    {% if breadcrumbs %}
+      {% for crumb in breadcrumbs %}
+      ,{
+        "@type": "ListItem",
+        "position": {{ forloop.counter|add:1 }},
+        "name": "{{ crumb.name }}",
+        "item": "https://{{ site.domain }}{{ crumb.url }}"
+      }
+      {% endfor %}
+    {% endif %}
+  ]
+}
+</script>
 {% endblock %}
 
 {# Переопределение Open Graph для страницы списка #}

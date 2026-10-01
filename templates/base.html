@@ -101,5 +101,41 @@
   {% block extra_js %}{% endblock %}
 
   {# SEO-ЗАДАНИЕ (аналитика): подключите Яндекс.Метрику (с целью на отправку формы) #}
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EventVenue",
+  "name": "{{ site.name }}",
+  "legalName": "{{ site.legal_name }}",
+  "description": "{{ site.tagline }}",
+  "telephone": "{{ site.phone_raw }}",
+  "url": "https://{{ site.domain }}",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{{ site.street }}",
+    "addressLocality": "{{ site.city }}",
+    "postalCode": "{{ site.postal_code }}",
+    "addressRegion": "{{ site.region }}",
+    "addressCountry": "{{ site.country }}"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "{{ site.geo.lat }}",
+    "longitude": "{{ site.geo.lon }}"
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+    ],
+    "opens": "12:00",
+    "closes": "02:00"
+  },
+  "sameAs": [
+    "{{ site.vk }}",
+    "{{ site.telegram }}"
+  ]
+}
+</script>
 </body>
 </html>

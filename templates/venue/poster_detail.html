@@ -1,6 +1,45 @@
 {% extends "base.html" %}
 {% load static %}
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "{{ poster.title }}",
+  "startDate": "{{ poster.date|date:'Y-m-d' }}{% if poster.time %}T{{ poster.time|time:'H:i:s' }}{% endif %}",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "description": "{{ poster.short_description }}",
+  {% if poster.image %}
+  "image": [
+    "https://{{ site.domain }}{% static poster.image %}"
+  ],
+  {% endif %}
+  "organizer": {
+    "@type": "Organization",
+    "name": "{% if poster.organizer %}{{ poster.organizer }}{% else %}{{ site.name }}{% endif %}",
+    "url": "https://{{ site.domain }}"
+  },
+  "location": {
+    "@type": "Place",
+    "name": "{{ site.name }}",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{ site.street }}",
+      "addressLocality": "{{ site.city }}",
+      "postalCode": "{{ site.postal_code }}",
+      "addressCountry": "{{ site.country }}"
+    }
+  }
+  {% if poster.schedule %},
+  "eventSchedule": {
+    "@type": "Schedule",
+    "description": "{{ poster.schedule }}"
+  }
+  {% endif %}
+}
+</script>
+
 {# ================================================================== #}
 {# SEO-ЗАДАНИЕ: динамические title и description события, например:   #}
 {#   «{{ poster.title }}: квиз по теме «{{ poster.topic }}» — {{ poster.date|date:"j E" }} | Подземка» #}
@@ -20,6 +59,30 @@
     <a href="{% url 'venue:poster_list' %}">Афиша</a> <span>/</span>
     <span>{{ poster.title }}</span>
   </nav>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Главная",
+      "item": "https://{{ site.domain }}/"
+    }
+    {% if breadcrumbs %}
+      {% for crumb in breadcrumbs %}
+      ,{
+        "@type": "ListItem",
+        "position": {{ forloop.counter|add:1 }},
+        "name": "{{ crumb.name }}",
+        "item": "https://{{ site.domain }}{{ crumb.url }}"
+      }
+      {% endfor %}
+    {% endif %}
+  ]
+}
+</script>
 {% endblock %}
 
 {% block content %}
