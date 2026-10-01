@@ -6,22 +6,11 @@
 {% block description %}Арендуйте зал «{{ hall.name }}» ({{ hall.area }} м²) в центре Читы от {{ hall.price }} руб/час. Идеально для {{ hall.purpose_short }}. Забронируйте онлайн!{% endblock %}
 
 {% block breadcrumbs %}
-<div class="container">
-    <nav aria-label="breadcrumb" class="breadcrumbs">
-        <ul itemscope itemtype="https://schema.org/BreadcrumbList">
-            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                <a itemprop="item" href="{% url 'venue:home' %}">
-                    <span itemprop="name">Главная</span>
-                </a>
-                <meta itemprop="position" content="1" />
-            </li>
-            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                <span itemprop="name">Залы</span>
-                <meta itemprop="position" content="2" />
-            </li>
-        </ul>
-    </nav>
-</div>
+  <nav class="container breadcrumbs mono" aria-label="Хлебные крошки">
+    <a href="{% url 'venue:home' %}">Главная</a> <span>/</span>
+    <a href="{% url 'venue:hall_list' %}">Залы</a> <span>/</span>
+    <span>{{ poster.title }}</span>
+  </nav>
 {% endblock %}
 
 {# Переопределение Open Graph для страницы списка #}

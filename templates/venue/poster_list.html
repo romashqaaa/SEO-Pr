@@ -4,7 +4,13 @@
 {% block title %} Афиша событий в Чите: квизы и вечеринки в лофте | Подземка {% endblock %}
 {% block description %} Афиша событий в Чите: квизы и вечеринки в лофте | Подземка {% endblock %}
 
-
+{% block breadcrumbs %}
+  <nav class="container breadcrumbs mono" aria-label="Хлебные крошки">
+    <a href="{% url 'venue:home' %}">Главная</a> <span>/</span>
+    <a href="{% url 'venue:poster_list' %}">Афиша</a> <span>/</span>
+    <span>{{ poster.title }}</span>
+  </nav>
+{% endblock %}
 
 {% block content %}
 <section class="page-head">

@@ -3,8 +3,8 @@ from django.urls import reverse
 
 
 class Hall(models.Model):
-    name = models.CharField("Название зала", max_length=100)
-    slug = models.SlugField("URL slug", unique=True)
+    name = models.CharField("Название", max_length=100)
+    slug = models.SlugField("URL slug", unique=True, null=True, blank=True)
     line_number = models.CharField("Номер линии", max_length=10, blank=True)
     line_color = models.CharField("Цвет линии", max_length=20, default="#000000")
     capacity_banquet = models.PositiveIntegerField("Вместимость (банкет)", default=0)
@@ -19,6 +19,7 @@ class Hall(models.Model):
     order = models.IntegerField("Порядок сортировки", default=0)
     is_active = models.BooleanField("Активен", default=True)
     updated_at = models.DateTimeField("Дата обновления", auto_now=True, null=True)
+    
         
     class Meta:
         verbose_name = "Зал"
@@ -39,9 +40,7 @@ class Hall(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        # ПОДСКАЗКА: после добавления slug замените pk=self.pk на slug=self.slug
-        return reverse("venue:hall_detail", kwargs={"pk": self.pk})
+    
 
     def features_list(self):
         return [f.strip() for f in self.features.splitlines() if f.strip()]
@@ -158,7 +157,8 @@ class BookingRequest(models.Model):
 class Poster(models.Model):
     """Событие в афише: квиз, концерт, вечеринка — с конкретной датой."""
 
-    title = models.CharField("Название", max_length=150)
+    title = models.CharField("Название", max_length=200)
+    slug = models.SlugField("URL slug", unique=True, null=True, blank=True)
     topic = models.CharField("Тема", max_length=150, blank=True)
     organizer = models.CharField("Организатор", max_length=150, blank=True)
     date = models.DateField("Дата", help_text="Для регулярного события — дата первого проведения")
@@ -171,6 +171,10 @@ class Poster(models.Model):
     description = models.TextField("Описание", blank=True)
     image = models.CharField("Картинка (путь в static)", max_length=200, blank=True)
     is_published = models.BooleanField("Опубликовано", default=True)
+    
+
+    def get_absolute_url(self):
+        return reverse('venue:hall_detail', kwargs={'slug': self.slug})
 
     # SEO-ЗАДАНИЕ (ЧПУ): как и у залов, адрес события сейчас /afisha/1/.
     # Хороший адрес: /afisha/kviz-60-sekund-kompyuternye-igry/ — добавьте slug.
@@ -188,4 +192,4 @@ class Poster(models.Model):
         return f"{self.title} ({self.date:%d.%m.%Y})"
 
     def get_absolute_url(self):
-        return reverse("venue:poster_detail", kwargs={"pk": self.pk})
+        return reverse('venue:poster_detail', kwargs={'slug': self.slug})

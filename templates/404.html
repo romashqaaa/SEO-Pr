@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Страница не найдена (404) | Подземка{% endblock %}
+{% block description %}К сожалению, запрашиваемая страница не существует. Перейдите на главную страницу Подземки для поиска площадок.{% endblock %}
+
+{% block content %}
+<section class="page-head" style="text-align: center; padding: 120px 20px;">
+  <div class="container">
+    <p class="mono muted">Ошибка 404</p>
+    <h1 class="page-head__title" style="font-size: 6rem; color: var(--color-neon); margin-bottom: 20px;">404</h1>
+    <p class="page-head__lead">Ой! Похоже, вы свернули не в тот тоннель.</p>
+    <p style="margin-bottom: 40px;">Страница, которую вы ищете, была перемещена, удалена или никогда не существовала.</p>
+    
+    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+      <a href="{% url 'venue:home' %}" class="btn btn--neon">На главную</a>
+      <a href="{% url 'venue:hall_list' %}" class="btn btn--ghost">Смотреть залы</a>
+      <a href="{% url 'venue:events' %}" class="btn btn--ghost">Афиша событий</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

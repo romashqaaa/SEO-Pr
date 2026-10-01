@@ -7,6 +7,7 @@ from .models import FAQ, BookingRequest, EventFormat, Hall, MenuPackage, Poster,
 class HallAdmin(admin.ModelAdmin):
     list_display = ("name", "line_number", "capacity_banquet", "area", "price_from", "order", "is_active")
     list_editable = ("order", "is_active")
+    prepopulated_fields = {'slug': ('name',)}
     # ПОДСКАЗКА: когда добавите поле slug, раскомментируйте —
     # slug будет заполняться автоматически при вводе названия:
     # prepopulated_fields = {"slug": ("name",)}
@@ -19,7 +20,7 @@ class PosterAdmin(admin.ModelAdmin):
     list_filter = ("is_published",)
     list_editable = ("is_published",)
     date_hierarchy = "date"
-
+    prepopulated_fields = {'slug': ('title',)}
 
 @admin.register(EventFormat)
 class EventFormatAdmin(admin.ModelAdmin):

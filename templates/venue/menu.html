@@ -5,22 +5,11 @@
 {% block title %} Меню | Подземка {% endblock %}
 
 {% block breadcrumbs %}
-<div class="container">
-    <nav aria-label="breadcrumb" class="breadcrumbs">
-        <ul itemscope itemtype="https://schema.org/BreadcrumbList">
-            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                <a itemprop="item" href="{% url 'venue:home' %}">
-                    <span itemprop="name">Главная</span>
-                </a>
-                <meta itemprop="position" content="1" />
-            </li>
-            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                <span itemprop="name">Меню</span>
-                <meta itemprop="position" content="2" />
-            </li>
-        </ul>
-    </nav>
-</div>
+  <nav class="container breadcrumbs mono" aria-label="Хлебные крошки">
+    <a href="{% url 'venue:home' %}">Главная</a> <span>/</span>
+    <a href="{% url 'venue:menu' %}">Меню</a> <span>/</span>
+    <span>{{ poster.title }}</span>
+  </nav>
 {% endblock %}
 
 {% block content %}
