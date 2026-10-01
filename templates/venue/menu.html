@@ -3,11 +3,31 @@
 {# SEO-ЗАДАНИЕ: title/description. Какие запросы? «банкетное меню цена на человека», «меню на свадьбу» ... #}
 {# Задание со звёздочкой: разметьте меню через Schema.org Menu / Offer. #}
 {% block title %} Меню | Подземка {% endblock %}
+
+{% block breadcrumbs %}
+<div class="container">
+    <nav aria-label="breadcrumb" class="breadcrumbs">
+        <ul itemscope itemtype="https://schema.org/BreadcrumbList">
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <a itemprop="item" href="{% url 'venue:home' %}">
+                    <span itemprop="name">Главная</span>
+                </a>
+                <meta itemprop="position" content="1" />
+            </li>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <span itemprop="name">Меню</span>
+                <meta itemprop="position" content="2" />
+            </li>
+        </ul>
+    </nav>
+</div>
+{% endblock %}
+
 {% block content %}
 <section class="page-head">
   <div class="container">
     <p class="mono muted">Кухня и бар</p>
-    <h1 class="page-head__title">Банкетное меню</h1>
+    <h2 class="page-head__title">Банкетное меню</h1>
     <p class="page-head__lead">Сеты от шефа на любой бюджет. Итоговое меню собираем вместе с вами на дегустации.</p>
   </div>
 </section>

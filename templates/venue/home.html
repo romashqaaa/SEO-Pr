@@ -60,7 +60,7 @@
 
     <div class="metro-map">
       {% for hall in halls %}
-        <a href="{{ hall.get_absolute_url }}" class="station" style="--c: {{ hall.line_color }}">
+        <a href="{{ hall.get_absolute_url }}">Подробнее о зале {{ hall.name }}</a>
           <span class="station__line mono">{{ hall.line_number }}</span>
           <span class="station__dot"></span>
           <span class="station__body">
@@ -79,7 +79,7 @@
   <div class="container about">
     <div class="about__text">
       {# SEO-ЗАДАНИЕ: вот он — второй h1. Исправьте на h2. #}
-      <h1 class="section__title">О площадке</h1>
+      <h2 class="section__title">О площадке</h2>
       <p>Раньше здесь было бомбоубежище и техпомещения. Стены и своды мы оставили как были, добавили свет, звук, кухню и бар.</p>
       <p>Проводим свадьбы, выпускные, корпоративы, дни рождения. Бывают концерты и вечеринки, их смотрите в афише. Звук и свет свои, ведущего и декоратора можно привести своих.</p>
       <a href="{% url 'venue:events' %}" class="link-arrow">Все форматы мероприятий →</a>

@@ -6,11 +6,31 @@
 {# Почему это важно для продвижения по запросам «зал для свадьбы в стиле лофт»?  #}
 {% block title %} Мероприятия | Подземка {% endblock %}
 {% block description %} Банкетный зал в подвале на Курнатовского, 17. Свадьбы, дни рождения, корпоративы и концерты на 30–350 гостей. Своя кухня и бар. {% endblock %}
+
+{% block breadcrumbs %}
+<div class="container">
+    <nav aria-label="breadcrumb" class="breadcrumbs">
+        <ul itemscope itemtype="https://schema.org/BreadcrumbList">
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <a itemprop="item" href="{% url 'venue:home' %}">
+                    <span itemprop="name">Главная</span>
+                </a>
+                <meta itemprop="position" content="1" />
+            </li>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <span itemprop="name">Мероприятия</span>
+                <meta itemprop="position" content="2" />
+            </li>
+        </ul>
+    </nav>
+</div>
+{% endblock %}
+
 {% block content %}
 <section class="page-head">
   <div class="container">
     <p class="mono muted">Форматы</p>
-    <h1 class="page-head__title">Мероприятия</h1>
+    <h2 class="page-head__title">Мероприятия</h1>
     <p class="page-head__lead">Проводим события любого масштаба — от ужина на 20 человек до концерта на 350.</p>
   </div>
 </section>
@@ -36,7 +56,7 @@
     <h2 class="section__title">Где проводить</h2>
     <div class="metro-map metro-map--compact">
       {% for hall in halls %}
-        <a href="{{ hall.get_absolute_url }}" class="station" style="--c: {{ hall.line_color }}">
+        <a href="{% url 'venue:events' %}">Смотреть афишу мероприятий</a>
           <span class="station__line mono">{{ hall.line_number }}</span>
           <span class="station__dot"></span>
           <span class="station__body">

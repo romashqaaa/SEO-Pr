@@ -4,12 +4,33 @@
 {# SEO-ЗАДАНИЕ: title/description для галереи. #}
 {% block title %} Галерея | Подземка {% endblock %}
 {% block description %} Банкетный зал в подвале на Курнатовского, 17. Свадьбы, дни рождения, корпоративы и концерты на 30–350 гостей. Своя кухня и бар. {% endblock %}
+
+{% block breadcrumbs %}
+<div class="container">
+    <nav aria-label="breadcrumb" class="breadcrumbs">
+        <ul itemscope itemtype="https://schema.org/BreadcrumbList">
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <a itemprop="item" href="{% url 'venue:home' %}">
+                    <span itemprop="name">Главная</span>
+                </a>
+                <meta itemprop="position" content="1" />
+            </li>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <span itemprop="name">Галерея</span>
+                <meta itemprop="position" content="2" />
+            </li>
+        </ul>
+    </nav>
+</div>
+{% endblock %}
+
 {% block content %}
 <section class="page-head">
+  
   <div class="container">
-    <p class="mono muted">Фото</p>
+    
     {# SEO-ЗАДАНИЕ: у этой страницы НЕТ h1 вообще — только h2. Исправьте. #}
-    <h2 class="page-head__title">Галерея</h2>
+    <h1 class="page-head__title">Фотогалерея залов для мероприятий</h1>
     <p class="page-head__lead">Так выглядят залы без гостей. Фото с мероприятий — в наших соцсетях.</p>
   </div>
 </section>
@@ -28,7 +49,11 @@
         {#  5. Названия файлов — латиницей и по смыслу (как сейчас) — ок.   #}
         {# ============================================================== #}
         <a href="{% static photo.src %}" class="gallery__link" data-lightbox="{{ photo.caption }}">
-          <img src="{% static photo.src %}">
+          <img src="{% static photo.src %}" 
+            alt="Фотография интерьера: {{ photo.caption }} для проведения мероприятий" 
+            width="800" 
+            height="600" 
+            loading="lazy">
         </a>
         <figcaption class="mono">{{ photo.caption }}</figcaption>
       </figure>
@@ -36,3 +61,4 @@
   </div>
 </section>
 {% endblock %}
+

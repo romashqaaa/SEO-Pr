@@ -5,13 +5,31 @@
 {% block title %}Залы | Подземка{% endblock %}
 {% block description %}Арендуйте зал «{{ hall.name }}» ({{ hall.area }} м²) в центре Читы от {{ hall.price }} руб/час. Идеально для {{ hall.purpose_short }}. Забронируйте онлайн!{% endblock %}
 
-{# Переопределение Open Graph специально для страницы зала #}
-{% block og_type %}article{% endblock %}
-{% block og_url %}{{ request.build_absolute_uri(hall.get_absolute_url()) }}{% endblock %}
+{% block breadcrumbs %}
+<div class="container">
+    <nav aria-label="breadcrumb" class="breadcrumbs">
+        <ul itemscope itemtype="https://schema.org/BreadcrumbList">
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <a itemprop="item" href="{% url 'venue:home' %}">
+                    <span itemprop="name">Главная</span>
+                </a>
+                <meta itemprop="position" content="1" />
+            </li>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <span itemprop="name">Залы</span>
+                <meta itemprop="position" content="2" />
+            </li>
+        </ul>
+    </nav>
+</div>
+{% endblock %}
 
-{# В og:image передаём абсолютный URL главной фотографии зала (JPG/PNG, не SVG!) #}
-{% block og_image %}{{ request.build_absolute_uri(hall.main_image.url) }}{% endblock %}
+{# Переопределение Open Graph для страницы списка #}
+{% block og_type %}website{% endblock %}
+{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}
 
+{# Используем дефолтную картинку сайта для страницы списка #}
+{% block og_image %}{{ request.scheme }}://{{ request.get_host }}/static/images/og-default.jpg{% endblock %}
 {% block content %}
 <section class="page-head">
   <div class="container">
@@ -29,7 +47,11 @@
         <a href="{{ hall.get_absolute_url }}" class="hall-card__img">
           {# SEO-ЗАДАНИЕ: alt="" у картинки зала. Напишите осмысленный alt: #}
           {# например: «Банкетный зал {{ hall.name }} в стиле лофт» #}
-          <img src="{% static hall.image %}" alt="">
+          <img src="{% static hall.image %}" 
+            alt="Банкетный зал {{ hall.name }} в стиле лофт для мероприятий" 
+            width="600" 
+            height="400" 
+            loading="lazy">
           <span class="hall-card__line mono">Линия {{ hall.line_number }}</span>
         </a>
         <div class="hall-card__body">

@@ -32,7 +32,11 @@
         <span class="date-badge"><b>{{ poster.date|date:"d" }}</b><span>{{ poster.date|date:"b" }}</span></span>
       {% endif %}
       {# SEO-ЗАДАНИЕ: картинка весит ~2,5 МБ. Сожмите, добавьте alt/width/height. #}
-      {% if poster.image %}<img src="{% static poster.image %}">{% endif %}
+      {% if poster.image %} <img src="{% static photo.src %}" 
+            alt="Фотография интерьера: {{ photo.caption }} для проведения мероприятий" 
+            width="800" 
+            height="600" 
+            loading="lazy">>{% endif %}
     </div>
 
     <div class="poster__info">

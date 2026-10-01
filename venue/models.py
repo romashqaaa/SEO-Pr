@@ -11,7 +11,9 @@ class Hall(models.Model):
     capacity_buffet = models.PositiveIntegerField("Вместимость (фуршет)", default=0)
     area = models.PositiveIntegerField("Площадь (м²)", default=0)
     short_description = models.TextField("Краткое описание", blank=True)
-
+    description = models.TextField("Полное описание", blank=True)
+    features = models.TextField("Особенности", blank=True)
+    image = models.CharField("Путь к картинке (например, img/hall-depo.jpg)", max_length=255, blank=True)
     # --- Добавляем недостающие поля ---
     price_from = models.DecimalField("Цена от", max_digits=10, decimal_places=2, default=0)
     order = models.IntegerField("Порядок сортировки", default=0)
