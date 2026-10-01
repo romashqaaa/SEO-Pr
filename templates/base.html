@@ -11,10 +11,12 @@
   {# Шаблон хорошего title: «Главный ключ — уточнение | Подземка»,        #}
   {# длина ~50-65 символов, уникален для каждой страницы.                 #}
   {# ================================================================== #}
-  <title>{% block title %}Подземка{% endblock %}</title>
+  <title>{% block title %}Аренда залов в Москве — Подземка{% endblock %}</title>
+
+  <meta name="description" content="{% block description %}Банкетный зал в подвале на Курнатовского, 17. Свадьбы, дни рождения, корпоративы и концерты на 30–350 гостей. Своя кухня и бар.{% endblock %}">
 
   {# SEO-ЗАДАНИЕ (description): мета-описания нет вообще.                 #}
-  {% block description} Банкетный зал в подвале на Курнатовского, 17. Свадьбы, дни рождения, корпоративы и концерты на 30–350 гостей. Своя кухня и бар. {% endblock %}
+  
   {# уникально для каждой страницы. Заведите блок {% block description %}. #}
 
   {# SEO-ЗАДАНИЕ (canonical): добавьте <link rel="canonical" href="{{ request.build_absolute_uri(request.path) }}">  #}
@@ -48,24 +50,20 @@
   <!-- Иконка для iOS / Apple устройств -->
   <link rel="apple-touch-icon" href="/static/images/favicons/apple-touch-icon.png"> <!-- 180x180 px -->
 
-<meta property="og:site_name" content="Подземка">
-    <meta property="og:locale" content="ru_RU">
-    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-    <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}{{ self.description() }}{% endblock %}">
-    <meta property="og:url" content="{% block og_url %}{{ request.build_absolute_uri() }}{% endblock %}">
-    
-    <!-- Изображение Open Graph (По умолчанию: лого/баннер 1200x630 PNG/JPG) -->
-    <meta property="og:image" content="{% block og_image %}{{ request.build_absolute_uri('/static/images/og-default.jpg') }}{% endblock %}">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:type" content="image/jpeg">
+<!-- Open Graph -->
+  <meta property="og:site_name" content="Подземка">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:title" content="{% block og_title %}Аренда залов в Москве — Подземка{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}Банкетный зал в подвале на Курнатовского, 17. Свадьбы, дни рождения, корпоративы и концерты на 30–350 гостей.{% endblock %}">
+  <meta property="og:url" content="{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}">
+  
+  <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}/static/images/og-default.jpg{% endblock %}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
 
-    <!-- Twitter Cards -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{% block twitter_title %}{{ self.og_title() }}{% endblock %}">
-    <meta name="twitter:description" content="{% block twitter_description %}{{ self.og_description() }}{% endblock %}">
-    <meta name="twitter:image" content="{% block twitter_image %}{{ self.og_image() }}{% endblock %}">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
   <!-- Цвет темы для мобильных браузеров (Safari, Chrome Android) -->
   <meta name="theme-color" content="#121212">
 

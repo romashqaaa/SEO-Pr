@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /booking/
+Disallow: /api/
+Disallow: /static/
+Disallow: /media/
+Disallow: /*?*
+
+Sitemap: https://podzemka.ru/sitemap.xml

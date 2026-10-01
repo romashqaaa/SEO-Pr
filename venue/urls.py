@@ -1,5 +1,5 @@
 from django.urls import path
-
+from django.views.generic import TemplateView
 from . import views
 
 app_name = "venue"
@@ -26,4 +26,15 @@ urlpatterns = [
     path("gallery/", views.gallery, name="gallery"),
     path("contacts/", views.contacts, name="contacts"),
     path("booking/", views.booking, name="booking"),
+    path(
+        'robots.txt',
+        TemplateView.as_dict(
+            template_name='robots.txt',
+            content_type='text/plain'
+        ) if hasattr(TemplateView, 'as_dict') else TemplateView.as_view(
+            template_name='robots.txt',
+            content_type='text/plain'
+        ),
+        name='robots',
+    ),
 ]
