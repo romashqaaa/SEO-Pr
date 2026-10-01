@@ -2,7 +2,8 @@
 {% load static %}
 
 {# SEO-ЗАДАНИЕ: title и description для страницы списка залов. #}
-{# Пример title: «Залы для банкета в стиле лофт на 30–350 гостей | Подземка» #}
+{% block title %}Залы | Подземка{% endblock %}
+{% block description %}Арендуйте зал «{{ hall.name }}» ({{ hall.area }} м²) в центре Читы от {{ hall.price }} руб/час. Идеально для {{ hall.purpose_short }}. Забронируйте онлайн!{% endblock %}
 
 {% block content %}
 <section class="page-head">

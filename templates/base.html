@@ -1,10 +1,10 @@
 {% load static %}<!DOCTYPE html>
 {# SEO-ЗАДАНИЕ: язык страницы. Какой атрибут lang должен быть у сайта на русском? #}
-<html>
+<html lang="ru">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  
   {# ================================================================== #}
   {# SEO-ЗАДАНИЕ (title): сейчас у ВСЕХ страниц одинаковый заголовок.     #}
   {# ПОДСКАЗКА: каждый шаблон-наследник должен переопределять блок title. #}
@@ -14,10 +14,10 @@
   <title>{% block title %}Подземка{% endblock %}</title>
 
   {# SEO-ЗАДАНИЕ (description): мета-описания нет вообще.                 #}
-  {# ПОДСКАЗКА: <meta name="description" content="...">, 120-160 символов, #}
+  {% block description} Банкетный зал в подвале на Курнатовского, 17. Свадьбы, дни рождения, корпоративы и концерты на 30–350 гостей. Своя кухня и бар. {% endblock %}
   {# уникально для каждой страницы. Заведите блок {% block description %}. #}
 
-  {# SEO-ЗАДАНИЕ (canonical): добавьте <link rel="canonical" href="...">  #}
+  {# SEO-ЗАДАНИЕ (canonical): добавьте <link rel="canonical" href="{{ request.build_absolute_uri(request.path) }}">  #}
   {# ПОДСКАЗКА: абсолютный URL можно получить через                         #}
   {# {{ request.scheme }}://{{ request.get_host }}{{ request.path }}        #}
 
