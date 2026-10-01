@@ -1,8 +1,15 @@
 from django.urls import path
 from django.views.generic import TemplateView
 from . import views
+from django.contrib.sitemaps.views import sitemap
+from venue.sitemaps import StaticViewSitemap, HallSitemap
 
 app_name = "venue"
+
+sitemaps = {
+    'static': StaticViewSitemap,
+    'halls': HallSitemap,
+}
 
 urlpatterns = [
     path("", views.home, name="home"),
@@ -36,5 +43,11 @@ urlpatterns = [
             content_type='text/plain'
         ),
         name='robots',
+    ),
+    path(
+        'sitemap.xml',
+        sitemap,
+        {'sitemaps': sitemaps},
+        name='django.contrib.sitemaps.views.sitemap'
     ),
 ]

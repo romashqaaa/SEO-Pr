@@ -3,48 +3,31 @@ from django.urls import reverse
 
 
 class Hall(models.Model):
-    """Зал (в стилистике сайта — «станция»)."""
+    name = models.CharField("Название зала", max_length=100)
+    slug = models.SlugField("URL slug", unique=True)
+    line_number = models.CharField("Номер линии", max_length=10, blank=True)
+    line_color = models.CharField("Цвет линии", max_length=20, default="#000000")
+    capacity_banquet = models.PositiveIntegerField("Вместимость (банкет)", default=0)
+    capacity_buffet = models.PositiveIntegerField("Вместимость (фуршет)", default=0)
+    area = models.PositiveIntegerField("Площадь (м²)", default=0)
+    short_description = models.TextField("Краткое описание", blank=True)
 
-    name = models.CharField("Название", max_length=100)
+    # --- Добавляем недостающие поля ---
+    price_from = models.DecimalField("Цена от", max_digits=10, decimal_places=2, default=0)
+    order = models.IntegerField("Порядок сортировки", default=0)
+    is_active = models.BooleanField("Активен", default=True)
+    updated_at = models.DateTimeField("Дата обновления", auto_now=True, null=True)
+        
+    class Meta:
+        verbose_name = "Зал"
+        verbose_name_plural = "Залы"
 
-    # SEO-ЗАДАНИЕ (ЧПУ — человекопонятные URL):
-    # Сейчас залы открываются по адресу /halls/1/, /halls/2/ ... — это плохо для SEO.
-    # ПОДСКАЗКА: добавьте поле
-    #     slug = models.SlugField("URL", max_length=120, unique=True)
-    # затем: makemigrations -> migrate, заполните slug в админке (или через
-    # prepopulated_fields в admin.py), поменяйте маршрут в venue/urls.py на <slug:slug>
-    # и get_absolute_url() ниже. Хорошие адреса: /halls/depo/, /halls/tonnel/
-    # Будьте внимательны: unique=True на заполненной таблице требует миграции в 2 шага
-    # (или временно null=True / default) — разберитесь, как это сделать.
+    def __str__(self):
+        return self.name
 
-    line_color = models.CharField(
-        "Цвет линии (HEX)", max_length=7, default="#e4312b",
-        help_text="Цвет «ветки метро» для зала, например #e4312b",
-    )
-    line_number = models.PositiveSmallIntegerField("Номер линии", default=1)
-    short_description = models.CharField("Короткое описание", max_length=255)
-    description = models.TextField("Полное описание")
-    capacity_banquet = models.PositiveIntegerField("Вместимость (банкет)")
-    capacity_buffet = models.PositiveIntegerField("Вместимость (фуршет)")
-    area = models.PositiveIntegerField("Площадь, м²")
-    price_from = models.PositiveIntegerField("Цена от, ₽/гость")
-    features = models.TextField(
-        "Особенности", blank=True,
-        help_text="Каждая особенность — с новой строки",
-    )
-    image = models.CharField(
-        "Картинка (путь в static)", max_length=200, default="img/hall-depo.jpg",
-    )
-
-    # SEO-ЗАДАНИЕ (управляемые мета-теги):
-    # ПОДСКАЗКА: хорошая практика — дать контент-менеджеру возможность задать
-    # title и description для каждой страницы вручную:
-    #     meta_title = models.CharField(max_length=70, blank=True)
-    #     meta_description = models.CharField(max_length=160, blank=True)
-    # а в шаблоне выводить их, если заполнены, иначе — сгенерированные.
-
-    order = models.PositiveSmallIntegerField("Порядок", default=0)
-    is_active = models.BooleanField("Показывать на сайте", default=True)
+    def get_absolute_url(self):
+        # ВАЖНО: Указываем 'venue:hall_detail', чтобы Django находил URL с учётом app_name
+        return reverse('venue:hall_detail', kwargs={'slug': self.slug})
 
     class Meta:
         verbose_name = "Зал"

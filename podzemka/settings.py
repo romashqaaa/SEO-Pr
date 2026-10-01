@@ -28,12 +28,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     # SEO-ЗАДАНИЕ (карта сайта):
     # ПОДСКАЗКА: для генерации sitemap.xml в Django есть встроенный фреймворк.
     # Нужно добавить сюда "django.contrib.sitemaps" (а при желании ещё
     # "django.contrib.sites" + SITE_ID = 1, чтобы домен брался из БД).
     "venue",
 ]
+SITE_ID = 1
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
